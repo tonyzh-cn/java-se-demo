@@ -1,36 +1,45 @@
 package com.example.demo.java.leetcode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author zhangtao
- * @since 2024/5/28 13:56
+ * @since 2024/5/28 16:32
  */
 public class TenBillionPhoneNumber {
     public static void main(String[] args) throws InterruptedException {
         Thread.sleep(10*1000);
-        byte []data=new byte[1000000000/8];
+        Map<String, BitSet> map = new HashMap();
 
-        for (int i = 1; i <= 1000000000; i++) {
-            int index=(i-1)/8;
-            data[index] = (byte) (data[index] | (0x01 << (i%8)));
+        for(int i=10;i<100;i++){
+            BitSet bitSet = map.computeIfAbsent("1" + i, k -> new BitSet());
+            for(int j=10;j<=99999999;j++){
+                bitSet.add(j);
+            }
         }
 
-        assert exists(data,1);
+        BitSet bitSet = map.get("110");
+        assert !bitSet.exists(9);
 
-        assert exists(data,1000000000);
-
-        assert !exists(data,0);
-
-
-        assert !exists(data,1000000001);
-
+        assert bitSet.exists(10);
 
         Thread.sleep(Integer.MAX_VALUE);
     }
 
-    private static boolean exists(byte []data,int n){
-        int index=(n-1)/8;
-        int pos=n%8;
+    static class BitSet{
+        byte []data =new byte[100000000/8];
 
-        return (data[index] & 0x01<<pos) != 0;
+        public void add(int n){
+            int index=(n-1)/8;
+            data[index] = (byte) (data[index] | (0x01 << (n%8)));
+        }
+
+        public boolean exists(int n){
+            int index=(n-1)/8;
+            int pos=n%8;
+
+            return (data[index] & 0x01<<pos) != 0;
+        }
     }
 }
