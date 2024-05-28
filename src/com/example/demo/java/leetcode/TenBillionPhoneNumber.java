@@ -1,5 +1,6 @@
 package com.example.demo.java.leetcode;
 
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,32 +15,32 @@ public class TenBillionPhoneNumber {
 
         for(int i=10;i<100;i++){
             BitSet bitSet = map.computeIfAbsent("1" + i, k -> new BitSet());
-            for(int j=10;j<=99999999;j++){
-                bitSet.add(j);
+            for(int j=10;j<=99;j++){
+                bitSet.set(j);
             }
         }
 
         BitSet bitSet = map.get("110");
-        assert !bitSet.exists(9);
-
-        assert bitSet.exists(10);
+        assert !bitSet.get(9);
+//
+        assert bitSet.get(10);
 
         Thread.sleep(Integer.MAX_VALUE);
     }
 
-    static class BitSet{
-        byte []data =new byte[100000000/8];
-
-        public void add(int n){
-            int index=(n-1)/8;
-            data[index] = (byte) (data[index] | (0x01 << (n%8)));
-        }
-
-        public boolean exists(int n){
-            int index=(n-1)/8;
-            int pos=n%8;
-
-            return (data[index] & 0x01<<pos) != 0;
-        }
-    }
+//    static class BitSet{
+//        byte []data =new byte[100000000/8];
+//
+//        public void add(int n){
+//            int index=(n-1)/8;
+//            data[index] = (byte) (data[index] | (0x01 << (n%8)));
+//        }
+//
+//        public boolean exists(int n){
+//            int index=(n-1)/8;
+//            int pos=n%8;
+//
+//            return (data[index] & 0x01<<pos) != 0;
+//        }
+//    }
 }
